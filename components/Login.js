@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, TextInput, Button, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import { supabase } from "./supabase";
 
 export default function Login() {
@@ -56,8 +62,19 @@ export default function Login() {
         </View>
 
         {/* ROW 3: BUTTONS */}
-        <Button title="Sign in" onPress={signIn} />
-        <Button title="Sign up" onPress={signUp} />
+        <View style={styles.horizontalRow}>
+          <View style={styles.buttonContainer}>
+            {/* SIGN IN BUTTON */}
+            <TouchableOpacity style={styles.button} onPress={signIn}>
+              <Text style={styles.buttonText}>Sign in</Text>
+            </TouchableOpacity>
+
+            {/* SIGN UP BUTTON */}
+            <TouchableOpacity style={styles.button} onPress={signUp}>
+              <Text style={styles.buttonText}>Sign up</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -76,8 +93,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   horizontalRow: {
-    flexDirection: "row",
-    alignItems: "center",
+    width: "100%",
     marginBottom: 16,
   },
   label: {
@@ -91,5 +107,27 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 8,
     marginBottom: 15,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    height: 50,
+    width: "auto",
+    paddingHorizontal: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+    marginHorizontal: 15,
+    borderRadius: 30,
+    backgroundColor: "#02bfe7",
+  },
+  buttonText: {
+    fontSize: 18,
+    textTransform: "capitalize",
+    fontWeight: "500",
+    color: "#000000",
   },
 });
