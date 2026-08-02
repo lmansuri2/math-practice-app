@@ -8,11 +8,11 @@ A cross-platform mobile application engineered using **React Native** to simulat
 * **State Management:** React Hooks (`useState` and `useEffect` for local state and side effects)
 * **Target Platform:** iOS (Cross-Platform Deployment)
 
-## ⚡ Key Engineering Features
+## Key Engineering Features
 * **Asynchronous Game Loop:** In progress of implementing non-blocking background threads to track countdown timers accurately without disrupting UI responsiveness.
 * **Algorithmic Arithmetic Engine:** Dynamic generation of variable-difficulty mathematical calculations (addition, subtraction, multiplication, division).
 
-## 🏃‍♂️ How to Run the Code Locally
+## How to Run the Code Locally
 1. Clone this repository: `git clone https://github.com/lmansuri2/math-practice-app.git`
-2. Install the necessary project dependencies: `npm install`
+2. Install the necessary project dependency: `npm install`
 3. Launch the application inside your local emulator: `npx expo start`
