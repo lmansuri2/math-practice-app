@@ -6,7 +6,7 @@ A cross-platform mobile application engineered using **React Native** to simulat
 * **Framework:** React Native, Expo
 * **Database & Auth:** Supabase
 * **State Management:** React Hooks (`useState` and `useEffect` for local state and side effects)
-* **Target Platforms:** iOS and Android (Cross-Platform Deployment)
+* **Target Platform:** iOS (Cross-Platform Deployment)
 
 ## ⚡ Key Engineering Features
 * **Asynchronous Game Loop:** In progress of implementing non-blocking background threads to track countdown timers accurately without disrupting UI responsiveness.
