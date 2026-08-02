@@ -7,6 +7,7 @@ import {
   Text,
 } from "react-native";
 import { supabase } from "./supabase";
+import Game from "./Game";
 
 export default function Login() {
   const [email, setEmail] = useState("");

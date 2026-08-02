@@ -7,6 +7,8 @@ import {
   Text,
 } from "react-native";
 import Menu from "./Menu";
+import CountDown from "react-native-countdown-component";
+
 export default function Game({ user }) {
   const [num1, setNum1] = useState(0);
   const [num2, setNum2] = useState(0);
@@ -19,21 +21,25 @@ export default function Game({ user }) {
   const generateQuestions = () => {
     const op = ["+", "-", "×", "÷"];
     const randNum = Math.floor(Math.random() * 4);
-
+    // op[randNum];
     setSymbol(op[randNum]);
 
     const number1 = Math.floor(Math.random() * 10) + 1;
-    const number2 = Math.floor(Math.random() * 10) + 1;
-
-    // if (symbol == "-") {
-    //   while (number2 > number1) {
-    //     number2 = Math.floor(Math.random() * 10) + 1;
-    //   }
-    // } else if (symbol == "÷") {
-    //   while (number2 > number1 || number1 % number2 != 0) {
-    //     number2 = Math.floor(Math.random() * 10) + 1;
-    //   }
-    // }
+    let number2 = 1;
+    if (op[randNum] == "-") {
+      number2 = Math.floor(Math.random() * number1);
+    } else if (op[randNum] == "÷") {
+      let factors = [];
+      for (i = 0; i <= number1; i++) {
+        if (number1 % i == 0) {
+          factors.push(i);
+        }
+      }
+      const randNum = Math.floor(Math.random() * (factors.length - 1));
+      number2 = factors[randNum];
+    } else {
+      number2 = Math.floor(Math.random() * 10);
+    }
 
     setNum1(number1);
     setNum2(number2);
@@ -58,27 +64,42 @@ export default function Game({ user }) {
     }
   };
 
+  const timesUp = () => {};
+
   useEffect(() => {
     generateQuestions();
   }, []);
 
   return (
-    <View style={styles.mathContainer}>
-      <Text style={styles.mathText}> Score: {score}</Text>
-      <Text style={styles.mathText}>
-        {num1} {symbol} {num2} = ?
-      </Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          value={userAnswer}
-          onChangeText={setUserAnswer}
-          keyboardType="numeric"
-          placeholder="         "
-        ></TextInput>
-        <TouchableOpacity style={styles.button} onPress={checkAnswer}>
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        <CountDown
+          until={60 * 10 + 30}
+          size={30}
+          onFinish={() => alert("Finished")}
+          digitStyle={{ backgroundColor: "#FFF" }}
+          digitTxtStyle={{ color: "#02bfe7" }}
+          timeToShow={["S"]}
+          timeLabels={{ s: "" }}
+        />
+        <Text size={20}> Score: {score}</Text>
+      </View>
+      <View style={styles.mathContainer}>
+        <Text style={styles.mathText}>
+          {num1} {symbol} {num2} = ?
+        </Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            value={userAnswer}
+            onChangeText={setUserAnswer}
+            keyboardType="numeric"
+            placeholder="         "
+          ></TextInput>
+          <TouchableOpacity style={styles.button} onPress={checkAnswer}>
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -90,9 +111,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 300,
   },
   mathText: {
-    fontSize: 42,
+    fontSize: 50,
     fontWeight: "bold",
     color: "#000000",
   },
