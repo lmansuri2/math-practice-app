@@ -9,7 +9,7 @@ A cross-platform mobile application engineered using **React Native** to simulat
 * **Target Platform:** iOS (Cross-Platform Deployment)
 
 ## Key Engineering Features
-* **Asynchronous Game Loop:** In progress of implementing non-blocking background threads to track countdown timers accurately without disrupting UI responsiveness.
+* **Asynchronous Game Loop:** Utilising React state hooks (`useState` and `useEffect`) to manage a non-blocking countdown timer that updates the system state accurately without lagging the user interface thread.
 * **Algorithmic Arithmetic Engine:** Dynamic generation of variable-difficulty mathematical calculations (addition, subtraction, multiplication, division).
 
 ## How to Run the Code Locally
