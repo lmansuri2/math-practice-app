@@ -7,11 +7,12 @@ import {
   Text,
 } from "react-native";
 import { supabase } from "./supabase";
-import Game from "./Game";
+import Menu from "./Menu";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [guest, setGuest] = useState(false);
 
   async function signIn() {
     const { error } = await supabase.auth.signInWithPassword({
@@ -33,7 +34,16 @@ export default function Login() {
       alert("Account created! Please try to sign in now.");
     }
   }
-
+  const guestIsTrue = () => {
+    setGuest(true);
+  };
+  if (guest) {
+    return (
+      <View style={{ flex: 1 }}>
+        <Menu />
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mental Maths</Text>
@@ -73,6 +83,11 @@ export default function Login() {
             {/* SIGN UP BUTTON */}
             <TouchableOpacity style={styles.button} onPress={signUp}>
               <Text style={styles.buttonText}>Sign up</Text>
+            </TouchableOpacity>
+
+            {/* Guest BUTTON */}
+            <TouchableOpacity style={styles.button} onPress={guestIsTrue}>
+              <Text style={styles.buttonText}>Guest Mode</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -121,7 +136,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
-    marginHorizontal: 15,
+    marginHorizontal: 2,
     borderRadius: 30,
     backgroundColor: "#02bfe7",
   },

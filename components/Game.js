@@ -7,16 +7,18 @@ import {
   Text,
 } from "react-native";
 import Menu from "./Menu";
-import CountDown from "react-native-countdown-component";
+import CountDown from "react-native-countdown-fixed";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Game({ user }) {
+export default function Game({ userCurrScore }) {
   const [num1, setNum1] = useState(0);
   const [num2, setNum2] = useState(0);
   const [symbol, setSymbol] = useState(null);
-
   const [score, setScore] = useState(0);
   let i = 0;
   const [userAnswer, setUserAnswer] = useState(0);
+
+  const [gameFinished, setGameFinished] = useState(false);
 
   const generateQuestions = () => {
     const op = ["+", "-", "×", "÷"];
@@ -64,23 +66,33 @@ export default function Game({ user }) {
     }
   };
 
-  const timesUp = () => {};
-
   useEffect(() => {
     generateQuestions();
   }, []);
 
+  if (gameFinished) {
+    if (score > userCurrScore) {
+      return (
+        <View style={{ flex: 1 }}>
+          <Menu score={score} />
+        </View>
+      );
+    } else {
+      return (
+        <View style={{ flex: 1 }}>
+          <Menu score={userCurrScore} />
+        </View>
+      );
+    }
+  }
+
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>
+      <View style={styles.topContainer}>
         <CountDown
-          until={60 * 10 + 30}
-          size={30}
-          onFinish={() => alert("Finished")}
-          digitStyle={{ backgroundColor: "#FFF" }}
-          digitTxtStyle={{ color: "#02bfe7" }}
-          timeToShow={["S"]}
-          timeLabels={{ s: "" }}
+          until={10}
+          onFinish={() => setGameFinished(true)}
+          size={20}
         />
         <Text size={20}> Score: {score}</Text>
       </View>
@@ -106,6 +118,14 @@ export default function Game({ user }) {
 }
 
 const styles = StyleSheet.create({
+  topContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    backgroundColor: "#eeeeee",
+  },
   mathContainer: {
     flex: 1,
     backgroundColor: "#fff",
