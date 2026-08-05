@@ -9,24 +9,24 @@ export default function Menu({ score }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [bestScore, setBestScore] = useState(0);
 
+  const [login, setLogin] = useState(false);
+
   function startGame() {
     setIsPlaying(true);
   }
-  async function signOut() {
-    await supabase.auth.signOut();
+  function goToLogin() {
+    setLogin(true);
   }
 
-  const [user, setUser] = useState(null);
+  if (login) {
+    return (
+      <View style={{ flex: 1 }}>
+        <Login />
+      </View>
+    );
+  }
 
   useEffect(() => {
-    // async function fetchBestScore() {
-    //   const { data, error } = await mySupabase.from("profiles").select("score");
-    //   if (error) {
-    //     alert("error fetching score");
-    //   } else {
-    //     setBestScore(data);
-    //   }
-    // }
     const loadBestScore = async () => {
       try {
         const savedScore = await AsyncStorage.getItem("bestScore");
@@ -43,7 +43,6 @@ export default function Menu({ score }) {
       if (error) console.log("Error:", error.message);
       else setUser(data.user);
     };
-    // fetchBestScore();
     loadBestScore();
     getUser();
   }, []);
@@ -64,12 +63,9 @@ export default function Menu({ score }) {
   }, [score, bestScore]);
 
   if (isPlaying) {
-    if (!user) {
-      alert("user data is null");
-    }
     return (
       <View style={{ flex: 1 }}>
-        <Game user={user} userCurrScore={bestScore} />
+        <Game user="guest" userCurrScore={bestScore} />
       </View>
     );
   }
@@ -85,8 +81,8 @@ export default function Menu({ score }) {
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>Settings</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={signOut}>
-            <Text style={styles.buttonText}>Sign Out</Text>
+          <TouchableOpacity style={styles.button} onPress={goToLogin}>
+            <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -107,14 +103,13 @@ const styles = StyleSheet.create({
     marginBottom: 150,
   },
   buttonContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
   button: {
-    height: 50,
+    height: 55,
     width: "auto",
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,

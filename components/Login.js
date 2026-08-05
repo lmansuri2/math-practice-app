@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { supabase } from "./supabase";
 import Menu from "./Menu";
+import MenuGuest from "./MenuGuest";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ export default function Login() {
       email,
       password,
     });
-    if (error) alert(error.message);
+    if (error) alert("something went wrong");
   }
 
   async function signUp() {
@@ -27,7 +28,7 @@ export default function Login() {
       email,
       password,
     });
-    if (error) alert(error.message);
+    if (error) alert("something went wrong");
     else if (data && data.session) {
       alert("Account created and logged in instantly!");
     } else {
@@ -40,7 +41,7 @@ export default function Login() {
   if (guest) {
     return (
       <View style={{ flex: 1 }}>
-        <Menu />
+        <MenuGuest />
       </View>
     );
   }
