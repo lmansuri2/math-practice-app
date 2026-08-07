@@ -1,13 +1,19 @@
-import { AsyncStorage } from "react-native";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import { supabase } from "./supabase";
 import Game from "./Game.js";
+import Settings from "./Settings.js";
 import Login from "./Login.js";
 
-export default function Menu({ score }) {
+export default function Menu() {
+  const [user, setUser] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [bestScore, setBestScore] = useState(0);
+  const [settingState, setSettingState] = useState(false);
+
+  function settingStateTrue() {
+    setSettingState(true);
+  }
 
   function startGame() {
     setIsPlaying(true);
@@ -16,52 +22,38 @@ export default function Menu({ score }) {
     await supabase.auth.signOut();
   }
 
-  const [user, setUser] = useState(null);
-
   useEffect(() => {
-    // async function fetchBestScore() {
-    //   const { data, error } = await mySupabase.from("profiles").select("score");
-    //   if (error) {
-    //     alert("error fetching score");
-    //   } else {
-    //     setBestScore(data);
-    //   }
-    // }
-    const loadBestScore = async () => {
-      try {
-        const savedScore = await AsyncStorage.getItem("bestScore");
-
-        if (savedScore !== null) {
-          setBestScore(parseInt(savedScore));
-        }
-      } catch (error) {
-        console.warn("Loading score error:", error);
-      }
-    };
     const getUser = async () => {
       const { data, error } = await supabase.auth.getUser();
       if (error) console.log("Error:", error.message);
-      else setUser(data.user);
+      else {
+        setUser(data.user);
+      }
     };
-    // fetchBestScore();
-    loadBestScore();
     getUser();
   }, []);
 
   useEffect(() => {
-    if (score != undefined && score > bestScore) {
-      setBestScore(score);
+    if (!user) return;
 
-      const saveScore = async () => {
-        try {
-          await AsyncStorage.setItem("best_score", score.toString());
-        } catch (error) {
-          console.warn("Error saving score:", error);
-        }
-      };
-      saveScore();
-    }
-  }, [score, bestScore]);
+    const fetchBestScore = async () => {
+      const { data } = await supabase
+        .from("profiles")
+        .select("score")
+        .eq("id", user.id)
+        .single();
+      setBestScore(data.score);
+    };
+    fetchBestScore();
+  }, [user]);
+
+  if (settingState) {
+    return (
+      <View style={{ flex: 1 }}>
+        <Settings />
+      </View>
+    );
+  }
 
   if (isPlaying) {
     if (!user) {
@@ -82,7 +74,7 @@ export default function Menu({ score }) {
           <TouchableOpacity style={styles.button} onPress={startGame}>
             <Text style={styles.buttonText}>Start</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={settingStateTrue}>
             <Text style={styles.buttonText}>Settings</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={signOut}>

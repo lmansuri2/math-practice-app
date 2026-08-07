@@ -5,7 +5,7 @@ import { supabase } from "./supabase";
 import Game from "./Game.js";
 import Login from "./Login.js";
 
-export default function Menu({ score }) {
+export default function MenuGuest({ score }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [bestScore, setBestScore] = useState(0);
 

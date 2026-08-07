@@ -83,12 +83,12 @@ export default function Game({ user, userCurrScore }) {
           .eq("id", user.id);
       };
       updateBestScore();
-      return (
-        <View style={{ flex: 1 }}>
-          <Menu score={score} />
-        </View>
-      );
     }
+    return (
+      <View style={{ flex: 1 }}>
+        <Menu />
+      </View>
+    );
   }
 
   return (
