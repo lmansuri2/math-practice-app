@@ -1,30 +1,13 @@
 import { AsyncStorage } from "react-native";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
-import { supabase } from "./supabase";
 import Game from "./Game.js";
 import Login from "./Login.js";
 
 export default function MenuGuest({ score }) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [bestScore, setBestScore] = useState(0);
-
   const [login, setLogin] = useState(false);
-
-  function startGame() {
-    setIsPlaying(true);
-  }
-  function goToLogin() {
-    setLogin(true);
-  }
-
-  if (login) {
-    return (
-      <View style={{ flex: 1 }}>
-        <Login />
-      </View>
-    );
-  }
+  const [bestScore, setBestScore] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     const loadBestScore = async () => {
@@ -38,13 +21,7 @@ export default function MenuGuest({ score }) {
         console.warn("Loading score error:", error);
       }
     };
-    const getUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (error) console.log("Error:", error.message);
-      else setUser(data.user);
-    };
     loadBestScore();
-    getUser();
   }, []);
 
   useEffect(() => {
@@ -62,6 +39,21 @@ export default function MenuGuest({ score }) {
     }
   }, [score, bestScore]);
 
+  function startGame() {
+    setIsPlaying(true);
+  }
+  function goToLogin() {
+    setLogin(true);
+  }
+
+  if (login) {
+    return (
+      <View style={{ flex: 1 }}>
+        <Login />
+      </View>
+    );
+  }
+
   if (isPlaying) {
     return (
       <View style={{ flex: 1 }}>
@@ -77,9 +69,6 @@ export default function MenuGuest({ score }) {
         <View>
           <TouchableOpacity style={styles.button} onPress={startGame}>
             <Text style={styles.buttonText}>Start</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Settings</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={goToLogin}>
             <Text style={styles.buttonText}>Login</Text>

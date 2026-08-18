@@ -25,7 +25,7 @@ export default function Game({ user, userCurrScore }) {
 
   const generateQuestions = () => {
     const op = ["+", "-", "×", "÷"];
-    const randNum = Math.floor(Math.random() * 4);
+    const randNum = Math.floor(Math.random() * 4) + 1;
     // op[randNum];
     setSymbol(op[randNum]);
 
@@ -76,13 +76,27 @@ export default function Game({ user, userCurrScore }) {
     if (score > userCurrScore) {
       const updateBestScore = async () => {
         if (!user?.id) return; // Safely check if it exists
-
         await supabase
           .from("profiles")
           .update({ score: score })
           .eq("id", user.id);
       };
       updateBestScore();
+
+      if (user == "guest") {
+        return (
+          <View style={{ flex: 1 }}>
+            <MenuGuest score={score} />
+          </View>
+        );
+      }
+    }
+    if (user == "guest") {
+      return (
+        <View style={{ flex: 1 }}>
+          <MenuGuest score={userCurrScore} />
+        </View>
+      );
     }
     return (
       <View style={{ flex: 1 }}>

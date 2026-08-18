@@ -1,9 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import { supabase } from "./supabase";
 import Menu from "./Menu";
 
 export default function Settings() {
+  const [menu, setMenu] = useState(false);
+
+  const goBack = () => {
+    setMenu(true);
+  };
+
+  if (menu) {
+    return (
+      <View style={{ flex: 1 }}>
+        <Menu />
+      </View>
+    );
+  }
+
   const deleteUser = async () => {
     await supabase.rpc("delete_user");
     supabase.auth.signOut();
@@ -18,7 +32,10 @@ export default function Settings() {
         <Text style={styles.buttonText}>Delete Account</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, { backgroundColor: "#02bfe7" }]}>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: "#02bfe7" }]}
+        onPress={goBack}
+      >
         <Text style={styles.buttonText}>Go Back</Text>
       </TouchableOpacity>
     </View>

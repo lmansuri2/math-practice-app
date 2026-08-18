@@ -5,15 +5,17 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
+  Button,
 } from "react-native";
 import { supabase } from "./supabase";
-import Menu from "./Menu";
 import MenuGuest from "./MenuGuest";
+import Forgotpassword from "./Forgotpassword";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [guest, setGuest] = useState(false);
+  const [forgotPass, setForgotPass] = useState(false);
 
   async function signIn() {
     const { error } = await supabase.auth.signInWithPassword({
@@ -38,10 +40,22 @@ export default function Login() {
   const guestIsTrue = () => {
     setGuest(true);
   };
+
+  const forgotPassTrue = () => {
+    setForgotPass(true);
+  };
   if (guest) {
     return (
       <View style={{ flex: 1 }}>
         <MenuGuest />
+      </View>
+    );
+  }
+
+  if (forgotPass) {
+    return (
+      <View style={{ flex: 1 }}>
+        <Forgotpassword />
       </View>
     );
   }
@@ -91,6 +105,8 @@ export default function Login() {
               <Text style={styles.buttonText}>Guest Mode</Text>
             </TouchableOpacity>
           </View>
+          {/* Forgot password BUTTON */}
+          <Button title="Forgot Password?" onPress={forgotPassTrue}></Button>
         </View>
       </View>
     </View>
