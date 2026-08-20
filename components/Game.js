@@ -25,8 +25,7 @@ export default function Game({ user, userCurrScore }) {
 
   const generateQuestions = () => {
     const op = ["+", "-", "×", "÷"];
-    const randNum = Math.floor(Math.random() * 4) + 1;
-    // op[randNum];
+    const randNum = Math.floor(Math.random() * 4);
     setSymbol(op[randNum]);
 
     const number1 = Math.floor(Math.random() * 10) + 1;

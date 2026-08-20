@@ -9,13 +9,13 @@ import {
 } from "react-native";
 import { supabase } from "./supabase";
 import MenuGuest from "./MenuGuest";
-import Forgotpassword from "./Forgotpassword";
+// import Forgotpassword from "./Forgotpassword";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [guest, setGuest] = useState(false);
-  const [forgotPass, setForgotPass] = useState(false);
+  // const [forgotPass, setForgotPass] = useState(false);
 
   async function signIn() {
     const { error } = await supabase.auth.signInWithPassword({
@@ -41,9 +41,9 @@ export default function Login() {
     setGuest(true);
   };
 
-  const forgotPassTrue = () => {
-    setForgotPass(true);
-  };
+  // const forgotPassTrue = () => {
+  //   setForgotPass(true);
+  // };
   if (guest) {
     return (
       <View style={{ flex: 1 }}>
@@ -52,13 +52,13 @@ export default function Login() {
     );
   }
 
-  if (forgotPass) {
-    return (
-      <View style={{ flex: 1 }}>
-        <Forgotpassword />
-      </View>
-    );
-  }
+  // if (forgotPass) {
+  //   return (
+  //     <View style={{ flex: 1 }}>
+  //       <Forgotpassword />
+  //     </View>
+  //   );
+  // }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mental Maths</Text>
@@ -106,7 +106,9 @@ export default function Login() {
             </TouchableOpacity>
           </View>
           {/* Forgot password BUTTON */}
-          <Button title="Forgot Password?" onPress={forgotPassTrue}></Button>
+          {/* <TouchableOpacity style={styles.forgotPass} onPress={forgotPassTrue}>
+            <Text style={styles.forgotPassText}>Forgot Password?</Text>
+          </TouchableOpacity> */}
         </View>
       </View>
     </View>
@@ -163,4 +165,12 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#000000",
   },
+  // forgotPass: {
+  //   marginTop: 30,
+  // },
+  // forgotPassText: {
+  //   fontSize: 15,
+  //   color: "#02bfe7",
+  //   textDecorationLine: "underline",
+  // },
 });

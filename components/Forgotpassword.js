@@ -16,8 +16,10 @@ export default function Forgotpassword() {
 
   const resetPassForEmail = async () => {
     await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: "http://127.0.0.1:5500/components/changePassword.html",
+      redirectTo: "mathapp://changePassword",
     });
+
+    alert("May take a second to receive request in email");
   };
 
   function goToLogin() {
