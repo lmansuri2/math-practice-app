@@ -1,5 +1,5 @@
 # Timed Mental Math Assessment Application (In Progress)
-A cross-platform mobile application engineered using **React Native** to simulate high-pressure technical assessment environments through timed arithmetic challenges.
+A cross-platform mobile application in React Native that simulates time-pressured assessment environments through 30-second arithmetic challenges and personal best-score tracking.
 
 
 ## Tech Stack
