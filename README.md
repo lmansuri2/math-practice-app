@@ -1,4 +1,4 @@
-# Timed Mental Math Assessment Application (In Progress)
+# Timed Mental Math Assessment Application
 A cross-platform mobile application in **React Native** that simulates time-pressured assessment environments through 30-second arithmetic challenges and personal best-score tracking.
 
 
