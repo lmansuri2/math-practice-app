@@ -6,7 +6,7 @@ A cross-platform mobile application in **React Native** that simulates time-pres
 * **Framework:** React Native, Expo
 * **Database & Auth:** Supabase
 * **State Management:** React Hooks (`useState` and `useEffect` for local state and side effects)
-* **Target Platform:** iOS (Cross-Platform Deployment)
+* **Target Platform:** iOS or Android (Cross-Platform Deployment)
 
 ## Key Engineering Features
 * **Asynchronous Game Loop:** Utilising React state hooks (`useState` and `useEffect`) to manage a non-blocking countdown timer that updates the system state accurately without lagging the user interface thread.
